@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "22fb2f60-a676-4814-963c-3aa817881748",
+		"name": "BiteWise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31609399"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseCode = pm.response.code;\r",
+									"if (responseCode >= 200 && responseCode < 300) {\r",
+									"    var responseBody = pm.response.json();\r",
+									"    var token = responseBody.data.token;\r",
+									"    pm.environment.set(\"auth_token\", token);\r",
+									"} else {\r",
+									"    console.log(\"Failed to get token. Response code: \" + responseCode);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"techwork\",\r\n  \"password\": \"techwork1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseCode = pm.response.code;\r",
+									"if (responseCode >= 200 && responseCode < 300) {\r",
+									"    var responseBody = pm.response.json();\r",
+									"    var token = responseBody.data.token;\r",
+									"    pm.environment.set(\"auth_token\", token);\r",
+									"} else {\r",
+									"    console.log(\"Failed to get token. Response code: \" + responseCode);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullname\": \"techwork\",\r\n  \"username\": \"techwork\",\r\n  \"birthDate\": \"2000-01-01T00:00:00.000Z\",\r\n  \"gender\": \"male\",\r\n  \"password\": \"techwork1234\",\r\n  \"repeat_password\": \"techwork1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
