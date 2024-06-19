@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  username  String    @unique
+  fullName  String
+  birthDate String    @default("2010-10-01T00:00:00.000Z")
+  gender    String    @default("unknown")
+  password  String    @default("")
+  role      String    @default("user")
+  deviceId  String    @unique
+  History   History[]
+}
+
+model Restaurant {
+  id         Int       @id @default(autoincrement())
+  name       String
+  address    String
+  region     String
+  openHours  String
+  openTime   String
+  closeTime  String
+  priceRange String
+  minPrice   Float
+  maxPrice   Float
+  avgPrice   Float
+  rating     Float
+  phone      String
+  typeId     Int
+  type       Type      @relation(fields: [typeId], references: [id])
+  menus      Menu[]
+  reviews    Review[]
+  History    History[]
+}
+
+model Menu {
+  id           Int        @id @default(autoincrement())
+  name         String
+  restaurants  Restaurant @relation(references: [id], fields: [restaurantId])
+  restaurantId Int
+}
+
+model Type {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  restaurant Restaurant[]
+}
+
+model Review {
+  id           Int        @id @default(autoincrement())
+  content      String     @db.Text
+  restaurants  Restaurant @relation(references: [id], fields: [restaurantId])
+  restaurantId Int
+}
+
+model History {
+  id           Int        @id @default(autoincrement())
+  userId       String
+  restaurantId Int
+  accessedAt   DateTime   @default(now())
+  user         User       @relation(fields: [userId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
